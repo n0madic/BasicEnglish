@@ -18,6 +18,10 @@ ApplicationWindow {
     Settings {
         id: settings
         property bool shuffle: false
+        property string title: "Basic English"
+        property int section: 0
+        property int subsection: 0
+        property int index: 0
     }
 
     property int countRight: 0
@@ -31,6 +35,7 @@ ApplicationWindow {
             listView.currentIndex = -1
             trainingButton.enabled = true
             testButton.enabled = true
+            titleLabel.text = "Basic English"
         }
     }
 
@@ -108,6 +113,7 @@ ApplicationWindow {
                     stackView.push("qrc:/pages/Card.qml")
                     trainingButton.enabled = false
                     testButton.enabled = true
+                    titleLabel.text = settings.title
                 }
             }
 
@@ -120,6 +126,7 @@ ApplicationWindow {
                     stackView.push("qrc:/pages/Test.qml")
                     testButton.enabled = false
                     trainingButton.enabled = true
+                    titleLabel.text = settings.title
                 }
             }
         }
@@ -153,7 +160,11 @@ ApplicationWindow {
                             trainingButton.enabled = false
                             testButton.enabled = true
                         }
-                        Func.fillListModel(model.section, model.subsection)
+                        settings.section = model.section
+                        settings.subsection = model.subsection
+                        settings.title = model.title
+                        titleLabel.text = settings.title
+                        Func.fillListModel()
                         countRight = 0
                         countWrong = 0
                     }
@@ -166,7 +177,7 @@ ApplicationWindow {
                     title: "Предметы и явления"; section: 1; subsection: 0
                 }
                 ListElement {
-                    title: "    200 слов-картинок"; section: 1; subsection: 1
+                    title: "    200 описательных слов"; section: 1; subsection: 1
                 }
                 ListElement {
                     title: "    400 общих слов"; section: 1; subsection: 2
@@ -175,16 +186,16 @@ ApplicationWindow {
                     title: "Действия и движение"; section: 2; subsection: 0
                 }
                 ListElement {
-                    title: "    100 слов"; section: 2; subsection: 0
+                    title: "    100 слов действия"; section: 2; subsection: 0
                 }
                 ListElement {
                     title: "Выражение качества"; section: 3; subsection: 0
                 }
                 ListElement {
-                    title: "    Общие (100 слов)"; section: 3; subsection: 1
+                    title: "    Общие 100 слов качества"; section: 3; subsection: 1
                 }
                 ListElement {
-                    title: "    Противоположные (50 слов)"; section: 3; subsection: 2
+                    title: "    Противоположные 50 слов"; section: 3; subsection: 2
                 }
                 ListElement {
                     title: "Грамматика"; section: 0; subsection: 0
@@ -263,6 +274,12 @@ ApplicationWindow {
                     text: "Ok"
                     onClicked: {
                         settings.shuffle = shuffleBox.checked
+                        if (settings.shuffle) {
+                            Func.shuffleWords()
+                        } else {
+                            Func.sortWords()
+                        }
+                        Func.fillListModel()
                         settingsPopup.close()
                     }
 
@@ -343,6 +360,14 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        Func.fillListModel(0, 0)
+        if (settings.shuffle) {
+            Func.shuffleWords()
+        }
+        Func.fillListModel()
+        if (settings.index > 0) {
+            stackView.push("qrc:/pages/Card.qml")
+            titleLabel.text = settings.title
+            trainingButton.enabled = false
+        }
     }
 }

@@ -6,8 +6,10 @@ Item {
 
     SwipeView {
         id: view
-        currentIndex: 0
+        currentIndex: settings.shuffle ? 0 : settings.index
         anchors.fill: parent
+
+        onCurrentIndexChanged: settings.index = view.currentIndex
 
         Repeater {
             id: loop
@@ -47,6 +49,7 @@ Item {
                         Image {
                             source: "qrc:/images/sound.png"
                             anchors.horizontalCenter: parent.horizontalCenter
+                            height: parent.height / 5
                             width: view.width / 5
                             fillMode: Image.PreserveAspectFit
 
@@ -59,13 +62,6 @@ Item {
                             }
                         }
 
-                        Image {
-                            source: "qrc:/images/arrows.png"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: view.width / 5
-                            fillMode: Image.PreserveAspectFit
-                        }
-
                         Label {
                             id: count
 
@@ -73,6 +69,13 @@ Item {
                             text: (view.currentIndex + 1) + "/" + listModel.count
                             horizontalAlignment: Qt.AlignHCenter
                             font.pixelSize: 12
+                        }
+
+                        Image {
+                            source: "qrc:/images/arrows.png"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            width: view.width / 5
+                            fillMode: Image.PreserveAspectFit
                         }
                     }
                 }

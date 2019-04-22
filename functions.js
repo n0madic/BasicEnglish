@@ -8,6 +8,18 @@ function getRandomIndex(lengthOfArray, indexToExclude) {
     return rand
 }
 
+function sortWords(array) {
+    listWords.sort(function (a, b) {
+        if (a.english > b.english) {
+            return 1;
+        }
+        if (a.english < b.english) {
+            return -1;
+        }
+        return 0;
+    })
+}
+
 function shuffleList(array) {
     var counter = array.length
     while (counter > 0) {
@@ -20,31 +32,16 @@ function shuffleList(array) {
     return array
 }
 
-function shuffleModel(model) {
-    var currentIndex = model.count,
-        temporaryValue, randomIndex
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex -= 1
-        // And swap it with the current element.
-        // the dictionaries maintain their reference so a copy should be made
-        // https://stackoverflow.com/a/36645492/6622587
-        temporaryValue = JSON.parse(JSON.stringify(model.get(currentIndex)))
-        model.set(currentIndex, model.get(randomIndex))
-        model.set(randomIndex, temporaryValue)
-    }
-    return model
+function shuffleWords(array) {
+    listWords = shuffleList(listWords)
 }
 
-function fillListModel(section, subsection) {
+function fillListModel() {
     var n
     listModel.clear()
     for (n = 0; n < listWords.length; n++) {
-        if ((section === 0 || listWords[n].section === section) &&
-            (subsection === 0 || listWords[n].subsection === subsection)) {
+        if ((settings.section === 0 || listWords[n].section === settings.section) &&
+            (settings.subsection === 0 || listWords[n].subsection === settings.subsection)) {
             var testVars = shuffleList(
                 [
                  listWords[n].russian,
@@ -58,9 +55,6 @@ function fillListModel(section, subsection) {
                 "test2": testVars[1],
                 "test3": testVars[2]
             })
-        }
-        if (settings.shuffle) {
-            listModel = shuffleModel(listModel)
         }
     }
 }
