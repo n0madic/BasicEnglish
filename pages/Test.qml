@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Universal 2.12
+import QtQuick.Layouts 1.12
 import "../functions.js" as Func
 
 Item {
@@ -25,7 +26,7 @@ Item {
                     width: view.width
                     height: view.height
 
-                    Column {
+                    ColumnLayout {
                         id: column
                         anchors.fill: parent
                         spacing: 15
@@ -37,14 +38,17 @@ Item {
                             width: parent.width
                             wrapMode: Label.Wrap
                             horizontalAlignment: Qt.AlignHCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             font.pixelSize: 34
                             text: english
                         }
 
                         Image {
                             source: "qrc:/images/sound.png"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: view.width / 7
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
+                            Layout.preferredHeight: parent.height / 7
+                            Layout.preferredWidth: parent.width / 7
                             fillMode: Image.PreserveAspectFit
 
                             MouseArea {
@@ -60,7 +64,7 @@ Item {
                             width: parent.width
                             wrapMode: Label.WordWrap
                             text: "Выберите правильный вариант перевода:"
-                            horizontalAlignment: Qt.AlignHCenter
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             font.pixelSize: 12
                         }
 
@@ -69,11 +73,13 @@ Item {
 
                             padding: 5
                             width: parent.width * 0.9
-                            height: 40
+                            height: 50
                             text: test1
                             horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
+                            Layout.preferredWidth: parent.width - 20
+                            Layout.preferredHeight: parent.height / 12
                             font.pointSize: 12
                             background: Rectangle {
                                 anchors.fill: parent
@@ -106,11 +112,13 @@ Item {
 
                             padding: 5
                             width: parent.width * 0.9
-                            height: 40
+                            height: 50
                             text: test2
                             horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
+                            Layout.preferredWidth: parent.width - 20
+                            Layout.preferredHeight: parent.height / 12
                             font.pointSize: 12
                             background: Rectangle {
                                 border.width: 1
@@ -142,11 +150,13 @@ Item {
 
                             padding: 5
                             width: parent.width * 0.9
-                            height: 40
+                            height: 50
                             text: test3
                             horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
+                            Layout.preferredWidth: parent.width - 20
+                            Layout.preferredHeight: parent.height / 12
                             font.pointSize: 12
                             background: Rectangle {
                                 border.width: 1
@@ -174,13 +184,13 @@ Item {
                         }
 
                         Label {
-                            width: parent.width
-                            anchors.bottomMargin: 10
+                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignCenter | Qt.AlignBottom
+                            horizontalAlignment: Text.AlignHCenter
                             wrapMode: Label.WordWrap
                             text: (view.currentIndex + 1) + "/" + listModel.count
                                   + "\nПравильных ответов: " + countRight
                                   + "\nНеправильных ответов: " + countWrong
-                            horizontalAlignment: Qt.AlignHCenter
                             font.pixelSize: 12
                         }
                     }
