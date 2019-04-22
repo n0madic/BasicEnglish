@@ -162,7 +162,7 @@ ApplicationWindow {
                         }
                         settings.section = model.section
                         settings.subsection = model.subsection
-                        settings.title = model.title
+                        settings.title = model.title.trim()
                         titleLabel.text = settings.title
                         Func.fillListModel()
                         countRight = 0
