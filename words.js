@@ -402,7 +402,7 @@ var listWords = [
     { "english": "lift", "russian": "поднимать, лифт", "section": 1, "subsection": 2 },
     { "english": "light", "russian": "освещать, легкий, свет", "section": 1, "subsection": 2 },
     { "english": "like", "russian": "подобный, любить, нравиться", "section": 3, "subsection": 1 },
-    { "english": "limit", "russian": "ограничивать l", "section": 1, "subsection": 2 },
+    { "english": "limit", "russian": "ограничивать", "section": 1, "subsection": 2 },
     { "english": "line", "russian": "линия, очередь, выравнивать", "section": 1, "subsection": 1 },
     { "english": "linen", "russian": "льняной, полотно", "section": 1, "subsection": 2 },
     { "english": "lip", "russian": "губа", "section": 1, "subsection": 1 },
