@@ -68,4 +68,4 @@ function pronunciation(word) {
         ", view, "")
     playSound.play()
     playSound.destroy(2000)
-    }
+}
