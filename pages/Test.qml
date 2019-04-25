@@ -75,12 +75,13 @@ Item {
                             width: parent.width * 0.9
                             height: 50
                             text: test1
+                            elide: Text.ElideRight
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
                             Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             Layout.preferredWidth: parent.width - 20
                             Layout.preferredHeight: parent.height / 12
-                            font.pointSize: 12
+                            font.pointSize: 14
                             background: Rectangle {
                                 anchors.fill: parent
                                 border.width: 1
@@ -114,12 +115,13 @@ Item {
                             width: parent.width * 0.9
                             height: 50
                             text: test2
+                            elide: Text.ElideRight
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
                             Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             Layout.preferredWidth: parent.width - 20
                             Layout.preferredHeight: parent.height / 12
-                            font.pointSize: 12
+                            font.pointSize: 14
                             background: Rectangle {
                                 border.width: 1
                                 radius: 10
@@ -152,12 +154,13 @@ Item {
                             width: parent.width * 0.9
                             height: 50
                             text: test3
+                            elide: Text.ElideRight
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
                             Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             Layout.preferredWidth: parent.width - 20
                             Layout.preferredHeight: parent.height / 12
-                            font.pointSize: 12
+                            font.pointSize: 14
                             background: Rectangle {
                                 border.width: 1
                                 radius: 10
