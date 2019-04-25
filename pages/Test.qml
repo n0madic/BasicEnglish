@@ -91,6 +91,7 @@ Item {
                                     anchors.fill: parent
                                     onClicked: {
                                         tested = true
+                                        var1.enabled = false
                                         if (test1 === russian) {
                                             parent.color = 'green';
                                             var1.color = 'white';
@@ -130,6 +131,7 @@ Item {
                                     anchors.fill: parent
                                     onClicked: {
                                         tested = true
+                                        var2.enabled = false
                                         if (test2 === russian) {
                                             parent.color = 'green';
                                             var2.color = 'white';
@@ -169,6 +171,7 @@ Item {
                                     anchors.fill: parent
                                     onClicked: {
                                         tested = true
+                                        var3.enabled = false
                                         if (test3 === russian) {
                                             parent.color = 'green';
                                             var3.color = 'white';
@@ -191,9 +194,10 @@ Item {
                             Layout.alignment: Qt.AlignCenter | Qt.AlignBottom
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Label.WordWrap
+                            textFormat: Text.StyledText
                             text: (view.currentIndex + 1) + "/" + listModel.count
-                                  + "\nПравильных ответов: " + countRight
-                                  + "\nНеправильных ответов: " + countWrong
+                                  + "<br/>Правильных ответов: " + countRight
+                                  + "<br/>Неправильных ответов: <font color=\"red\">" + countWrong + "</font>"
                             font.pixelSize: 12
                         }
                     }
