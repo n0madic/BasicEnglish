@@ -62,6 +62,19 @@ Item {
                             }
                         }
 
+                        Connections {
+                            target: view
+
+                            function autosound() {
+                                if (settings.autosound && view.currentIndex === model.index) {
+                                    Func.pronunciation(english)
+                                }
+                            }
+
+                            onCurrentIndexChanged: autosound()
+                            Component.onCompleted: autosound()
+                        }
+
                         Label {
                             id: count
 

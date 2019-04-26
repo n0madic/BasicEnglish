@@ -17,6 +17,8 @@ ApplicationWindow {
 
     Settings {
         id: settings
+        property bool autosound: false
+        property bool blindtest: false
         property bool shuffle: false
         property string title: "Basic English"
         property int section: 0
@@ -238,7 +240,7 @@ ApplicationWindow {
     Popup {
         id: settingsPopup
         x: (window.width - width) / 2
-        y: window.height / 6
+        y: window.height / 7
         width: Math.min(window.width, window.height) / 3 * 2
         height: settingsColumn.implicitHeight + topPadding + bottomPadding
         modal: true
@@ -253,7 +255,7 @@ ApplicationWindow {
                 font.bold: true
             }
 
-            RowLayout {
+            ColumnLayout {
                 spacing: 10
 
                 CheckBox {
@@ -264,6 +266,25 @@ ApplicationWindow {
                         checked = settings.shuffle
                     }
                 }
+
+                CheckBox {
+                    id: soundBox
+                    text: "Автопроизношение"
+                    checked: settings.autosound
+                    Component.onCompleted: {
+                        checked = settings.autosound
+                    }
+                }
+
+                CheckBox {
+                    id: blindBox
+                    text: "Тест вслепую"
+                    checked: settings.blindtest
+                    Component.onCompleted: {
+                        checked = settings.blindtest
+                    }
+                }
+
             }
 
             RowLayout {
@@ -273,13 +294,17 @@ ApplicationWindow {
                     id: okButton
                     text: "Ok"
                     onClicked: {
-                        settings.shuffle = shuffleBox.checked
-                        if (settings.shuffle) {
-                            Func.shuffleWords()
-                        } else {
-                            Func.sortWords()
+                        settings.autosound = soundBox.checked
+                        settings.blindtest = blindBox.checked
+                        if (settings.shuffle != shuffleBox.checked) {
+                            settings.shuffle = shuffleBox.checked
+                            if (settings.shuffle) {
+                                Func.shuffleWords()
+                            } else {
+                                Func.sortWords()
+                            }
+                            Func.fillListModel()
                         }
-                        Func.fillListModel()
                         settingsPopup.close()
                     }
 
@@ -295,7 +320,9 @@ ApplicationWindow {
                     id: cancelButton
                     text: "Cancel"
                     onClicked: {
+                        blindBox.checked = settings.blindtest
                         shuffleBox.checked = settings.shuffle
+                        soundBox.checked = settings.autosound
                         settingsPopup.close()
                     }
 

@@ -42,6 +42,7 @@ Item {
                             Layout.alignment: Qt.AlignCenter | Qt.AlignTop
                             font.pixelSize: 34
                             text: english
+                            visible: !settings.blindtest
                         }
 
                         Image {
@@ -58,6 +59,21 @@ Item {
                                     Func.pronunciation(english)
                                 }
                             }
+
+                        }
+
+                        Connections {
+                            target: view
+
+                            function autosound() {
+                                if ((settings.autosound || settings.blindtest) &&
+                                        view.currentIndex === model.index) {
+                                    Func.pronunciation(english)
+                                }
+                            }
+
+                            onCurrentIndexChanged: autosound()
+                            Component.onCompleted: autosound()
                         }
 
                         Label {
