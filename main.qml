@@ -35,7 +35,7 @@ ApplicationWindow {
         onActivated: {
             stackLayout.currentIndex--
             listView.currentIndex = -1
-            trainingButton.enabled = true
+            trainingButton.enabled = (stackLayout.currentIndex != 1) ? true : false
             testButton.enabled = true
             titleLabel.text = "Basic English"
         }
