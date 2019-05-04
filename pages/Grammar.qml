@@ -7,7 +7,6 @@ Pane {
     ScrollView {
         anchors.fill: parent
         contentHeight: grammar.paintedHeight
-        contentWidth: grammar.paintedWidth
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
         Text {

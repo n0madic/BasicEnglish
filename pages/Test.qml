@@ -8,7 +8,7 @@ import "../functions.js" as Func
 Item {
 
     SwipeView {
-        id: view
+        id: viewTest
         currentIndex: 0
         anchors.fill: parent
 
@@ -23,8 +23,8 @@ Item {
                 sourceComponent:
 
                 Pane {
-                    width: view.width
-                    height: view.height
+                    width: viewTest.width
+                    height: viewTest.height
 
                     ColumnLayout {
                         id: column
@@ -63,17 +63,13 @@ Item {
                         }
 
                         Connections {
-                            target: view
+                            target: viewTest
+                            onCurrentIndexChanged: if (viewTest.currentIndex === model.index) Func.autosound(english)
+                        }
 
-                            function autosound() {
-                                if ((settings.autosound || settings.blindtest) &&
-                                        view.currentIndex === model.index) {
-                                    Func.pronunciation(english)
-                                }
-                            }
-
-                            onCurrentIndexChanged: autosound()
-                            Component.onCompleted: autosound()
+                        Connections {
+                            target: stackLayout
+                            onCurrentIndexChanged: if (viewTest.currentIndex === model.index && stackLayout.currentIndex === 2) Func.autosound(english)
                         }
 
                         Label {
@@ -112,8 +108,8 @@ Item {
                                             parent.color = 'green';
                                             var1.color = 'white';
                                             countRight = countRight + 1
-                                            if (view.currentIndex < listModel.count) {
-                                                view.setCurrentIndex(view.currentIndex + 1)
+                                            if (viewTest.currentIndex < listModel.count) {
+                                                viewTest.setCurrentIndex(viewTest.currentIndex + 1)
                                             }
                                         } else {
                                             parent.color = 'red';
@@ -152,8 +148,8 @@ Item {
                                             parent.color = 'green';
                                             var2.color = 'white';
                                             countRight = countRight + 1
-                                            if (view.currentIndex < listModel.count) {
-                                                view.setCurrentIndex(view.currentIndex + 1)
+                                            if (viewTest.currentIndex < listModel.count) {
+                                                viewTest.setCurrentIndex(viewTest.currentIndex + 1)
                                             }
                                         } else {
                                             parent.color = 'red';
@@ -192,8 +188,8 @@ Item {
                                             parent.color = 'green';
                                             var3.color = 'white';
                                             countRight = countRight + 1
-                                            if (view.currentIndex < listModel.count) {
-                                                view.setCurrentIndex(view.currentIndex + 1)
+                                            if (viewTest.currentIndex < listModel.count) {
+                                                viewTest.setCurrentIndex(viewTest.currentIndex + 1)
                                             }
                                         } else {
                                             parent.color = 'red';
@@ -211,7 +207,7 @@ Item {
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Label.WordWrap
                             textFormat: Text.StyledText
-                            text: (view.currentIndex + 1) + "/" + listModel.count
+                            text: (viewTest.currentIndex + 1) + "/" + listModel.count
                                   + "<br/>Правильных ответов: " + countRight
                                   + "<br/>Неправильных ответов: <font color=\"red\">" + countWrong + "</font>"
                             font.pixelSize: 12

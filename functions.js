@@ -65,7 +65,13 @@ function pronunciation(word) {
         Audio {
             source: \"qrc:/audio/" + word.replace("/", "-") + ".mp3\"
         }
-        ", view, "")
+        ", stackLayout, "")
     playSound.play()
     playSound.destroy(2000)
+}
+
+function autosound(word) {
+    if (settings.autosound) {
+        pronunciation(word)
+    }
 }

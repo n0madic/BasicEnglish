@@ -31,9 +31,9 @@ ApplicationWindow {
 
     Shortcut {
         sequences: ["Esc", "Back"]
-        enabled: stackView.depth > 1
+        enabled: stackLayout.currentIndex > 0
         onActivated: {
-            stackView.pop()
+            stackLayout.currentIndex--
             listView.currentIndex = -1
             trainingButton.enabled = true
             testButton.enabled = true
@@ -111,8 +111,8 @@ ApplicationWindow {
                 transformOrigin: Item.Left
 
                 onClicked: {
-                    stackView.pop()
-                    stackView.push("qrc:/pages/Card.qml")
+                    card.active = true
+                    stackLayout.currentIndex = 1
                     trainingButton.enabled = false
                     testButton.enabled = true
                     titleLabel.text = settings.title
@@ -124,8 +124,8 @@ ApplicationWindow {
                 text: "Тестирование"
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 onClicked: {
-                    stackView.pop()
-                    stackView.push("qrc:/pages/Test.qml")
+                    test.active = true
+                    stackLayout.currentIndex = 2
                     testButton.enabled = false
                     trainingButton.enabled = true
                     titleLabel.text = settings.title
@@ -138,7 +138,7 @@ ApplicationWindow {
         id: drawer
         width: Math.min(window.width, window.height) / 3 * 2
         height: window.height
-        dragMargin: stackView.depth > 1 ? 0 : undefined
+        dragMargin: stackLayout.currentIndex > 0 ? 0 : undefined
 
         ListView {
             id: listView
@@ -151,24 +151,26 @@ ApplicationWindow {
                 highlighted: ListView.isCurrentItem
                 onClicked: {
                     if (model.title === "Грамматика") {
-                        stackView.push("qrc:/pages/Grammar.qml")
+                        grammar.active = true
+                        stackLayout.currentIndex = 3
                         trainingButton.enabled = true
                         testButton.enabled = true
                     } else if (listView.currentIndex != index) {
+                        card.active = false
+                        stackLayout.currentIndex = 0
                         listView.currentIndex = index
-                        stackView.pop()
-                        if (stackView.depth == 1) {
-                            stackView.push("qrc:/pages/Card.qml")
-                            trainingButton.enabled = false
-                            testButton.enabled = true
-                        }
                         settings.section = model.section
                         settings.subsection = model.subsection
-                        settings.title = model.title.trim()
-                        titleLabel.text = settings.title
+                        settings.index = 0
                         Func.fillListModel()
+                        trainingButton.enabled = false
+                        testButton.enabled = true
+                        settings.title = model.title.trim()
+                        card.active = true
+                        titleLabel.text = settings.title
                         countRight = 0
                         countWrong = 0
+                        stackLayout.currentIndex = 1
                     }
                     drawer.close()
                 }
@@ -208,11 +210,11 @@ ApplicationWindow {
         }
     }
 
-    StackView {
-        id: stackView
+    StackLayout {
+        id: stackLayout
         anchors.fill: parent
 
-        initialItem: Pane {
+        Pane {
             id: pane
 
             Image {
@@ -235,6 +237,25 @@ ApplicationWindow {
                 wrapMode: Label.Wrap
             }
         }
+
+        Loader {
+           id: card
+           source: "qrc:/pages/Card.qml"
+           active: false
+        }
+
+        Loader {
+           id: test
+           source: "qrc:/pages/Test.qml"
+           active: false
+        }
+
+        Loader {
+           id: grammar
+           source: "qrc:/pages/Grammar.qml"
+           active: false
+        }
+
     }
 
     Popup {
@@ -391,8 +412,9 @@ ApplicationWindow {
             Func.shuffleWords()
         }
         Func.fillListModel()
+        card.active = true
         if (settings.index > 0) {
-            stackView.push("qrc:/pages/Card.qml")
+            stackLayout.currentIndex = 1
             titleLabel.text = settings.title
             trainingButton.enabled = false
         }

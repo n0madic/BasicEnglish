@@ -5,11 +5,11 @@ import "../functions.js" as Func
 Item {
 
     SwipeView {
-        id: view
+        id: viewCard
         currentIndex: settings.shuffle ? 0 : settings.index
         anchors.fill: parent
 
-        onCurrentIndexChanged: settings.index = view.currentIndex
+        onCurrentIndexChanged: settings.index = viewCard.currentIndex
 
         Repeater {
             id: loop
@@ -20,8 +20,8 @@ Item {
                 sourceComponent:
 
                 Pane {
-                    width: view.width
-                    height: view.height
+                    width: viewCard.width
+                    height: viewCard.height
 
                     Column {
                         id: column
@@ -50,7 +50,7 @@ Item {
                             source: "qrc:/images/sound.png"
                             anchors.horizontalCenter: parent.horizontalCenter
                             height: parent.height / 5
-                            width: view.width / 5
+                            width: viewCard.width / 5
                             fillMode: Image.PreserveAspectFit
 
                             MouseArea {
@@ -63,23 +63,20 @@ Item {
                         }
 
                         Connections {
-                            target: view
+                            target: viewCard
+                            onCurrentIndexChanged: if (card.active && viewCard.currentIndex === model.index) Func.autosound(english)
+                        }
 
-                            function autosound() {
-                                if (settings.autosound && view.currentIndex === model.index) {
-                                    Func.pronunciation(english)
-                                }
-                            }
-
-                            onCurrentIndexChanged: autosound()
-                            Component.onCompleted: autosound()
+                        Connections {
+                            target: stackLayout
+                            onCurrentIndexChanged: if (card.active && viewCard.currentIndex === model.index && stackLayout.currentIndex === 1) Func.autosound(english)
                         }
 
                         Label {
                             id: count
 
                             width: parent.width
-                            text: (view.currentIndex + 1) + "/" + listModel.count
+                            text: (viewCard.currentIndex + 1) + "/" + listModel.count
                             horizontalAlignment: Qt.AlignHCenter
                             font.pixelSize: 12
                         }
@@ -87,7 +84,7 @@ Item {
                         Image {
                             source: "qrc:/images/arrows.png"
                             anchors.horizontalCenter: parent.horizontalCenter
-                            width: view.width / 5
+                            width: viewCard.width / 5
                             fillMode: Image.PreserveAspectFit
                         }
                     }
